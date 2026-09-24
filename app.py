@@ -19,246 +19,183 @@ st.set_page_config(
 
 
 # =========================================================
-# CSS ปรับแต่งหน้าตา
+# CSS
 # =========================================================
 
 st.markdown("""
 <style>
 
-    /* =========================
-       พื้นฐาน
-       ========================= */
+.stApp {
+    background: #ffffff;
+}
 
-    .stApp {
-        background-color: #ffffff;
-    }
+.main .block-container {
+    max-width: 900px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+}
 
-    .main .block-container {
-        max-width: 900px;
-        padding-top: 35px;
-        padding-bottom: 50px;
-    }
+#MainMenu {
+    visibility: hidden;
+}
 
-    #MainMenu {
-        visibility: hidden;
-    }
+footer {
+    visibility: hidden;
+}
 
-    footer {
-        visibility: hidden;
-    }
-
-    header {
-        visibility: hidden;
-    }
+header {
+    visibility: hidden;
+}
 
 
-    /* =========================
-       Header
-       ========================= */
+/* HEADER */
 
-    .logo {
-        text-align: center;
-        font-size: 58px;
-        margin-bottom: 0px;
-    }
+.logo {
+    text-align: center;
+    font-size: 55px;
+}
 
-    .main-title {
-        text-align: center;
-        font-size: 42px;
-        font-weight: 700;
-        color: #202124;
-        letter-spacing: -1px;
-        margin-bottom: 5px;
-    }
+.main-title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    color: #202124;
+}
 
-    .subtitle {
-        text-align: center;
-        font-size: 17px;
-        color: #5f6368;
-        margin-bottom: 35px;
-    }
+.subtitle {
+    text-align: center;
+    color: #5f6368;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
 
 
-    /* =========================
-       กล่องหัวข้อ
-       ========================= */
+/* CARD */
 
-    .section-title {
-        font-size: 23px;
-        font-weight: 600;
-        color: #202124;
-        margin-top: 20px;
-        margin-bottom: 14px;
-    }
+.card {
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: 22px;
+    padding: 24px;
+    margin: 15px 0;
+    box-shadow: 0 2px 8px rgba(60,64,67,.10);
+}
 
+.card-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #202124;
+    margin-bottom: 10px;
+}
 
-    /* =========================
-       Upload Card
-       ========================= */
-
-    .upload-card {
-        background: #ffffff;
-        border: 1px solid #dadce0;
-        border-radius: 24px;
-        padding: 20px;
-        box-shadow: 0 2px 8px rgba(60,64,67,0.12);
-        margin-bottom: 20px;
-    }
+.card-text {
+    color: #5f6368;
+    line-height: 1.7;
+    font-size: 16px;
+}
 
 
-    /* =========================
-       Image Card
-       ========================= */
+/* DISEASE CARD */
 
-    .image-card {
-        background: #f8f9fa;
-        border-radius: 20px;
-        padding: 15px;
-        margin-top: 15px;
-        margin-bottom: 20px;
-    }
+.disease-card {
+    background: #ffffff;
+    border: 1px solid #dadce0;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px 0;
+    box-shadow: 0 2px 6px rgba(60,64,67,.08);
+}
 
+.disease-icon {
+    font-size: 38px;
+}
 
-    /* =========================
-       Result
-       ========================= */
+.disease-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #202124;
+}
 
-    .result-card {
-        background: #f8fbf8;
-        border: 1px solid #d7ead9;
-        border-radius: 24px;
-        padding: 28px;
-        margin-top: 25px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .result-icon {
-        font-size: 48px;
-        margin-bottom: 8px;
-    }
-
-    .result-title {
-        font-size: 30px;
-        font-weight: 700;
-        color: #188038;
-        margin-bottom: 8px;
-    }
-
-    .result-type {
-        font-size: 15px;
-        color: #5f6368;
-    }
+.disease-desc {
+    color: #5f6368;
+    font-size: 14px;
+}
 
 
-    /* =========================
-       Confidence
-       ========================= */
+/* RESULT */
 
-    .confidence-card {
-        background: #ffffff;
-        border: 1px solid #dadce0;
-        border-radius: 20px;
-        padding: 22px;
-        margin-top: 15px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
+.result-card {
+    background: #f6fbf7;
+    border: 1px solid #cde5d2;
+    border-radius: 24px;
+    padding: 28px;
+    text-align: center;
+    margin-top: 20px;
+}
 
-    .confidence-label {
-        font-size: 15px;
-        color: #5f6368;
-    }
+.result-icon {
+    font-size: 50px;
+}
 
-    .confidence-value {
-        font-size: 36px;
-        font-weight: 700;
-        color: #1a73e8;
-        margin-top: 5px;
-    }
+.result-title {
+    color: #188038;
+    font-size: 30px;
+    font-weight: 700;
+}
 
 
-    /* =========================
-       Info Card
-       ========================= */
+/* CONFIDENCE */
 
-    .info-card {
-        background: #ffffff;
-        border: 1px solid #dadce0;
-        border-radius: 20px;
-        padding: 22px;
-        margin-top: 18px;
-        box-shadow: 0 1px 5px rgba(60,64,67,0.08);
-    }
+.confidence-card {
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 15px;
+}
 
-    .info-title {
-        font-size: 20px;
-        font-weight: 600;
-        color: #202124;
-        margin-bottom: 10px;
-    }
-
-    .info-text {
-        color: #5f6368;
-        font-size: 16px;
-        line-height: 1.7;
-    }
+.confidence-value {
+    color: #1a73e8;
+    font-size: 36px;
+    font-weight: 700;
+}
 
 
-    /* =========================
-       ปุ่ม
-       ========================= */
+/* BUTTON */
 
-    .stButton > button {
-        width: 100%;
-        height: 52px;
-        border-radius: 26px;
-        border: none;
-        background: #1a73e8;
-        color: white;
-        font-size: 17px;
-        font-weight: 600;
-        box-shadow: 0 2px 5px rgba(26,115,232,0.25);
-        transition: all 0.2s ease;
-    }
+.stButton > button {
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    background: #1a73e8;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
 
-    .stButton > button:hover {
-        background: #1557b0;
-        color: white;
-        transform: translateY(-1px);
-    }
+.stButton > button:hover {
+    background: #1557b0;
+    color: white;
+}
 
 
-    /* =========================
-       File uploader
-       ========================= */
+/* FOOTER */
 
-    [data-testid="stFileUploader"] {
-        background: #f8f9fa;
-        border-radius: 18px;
-        padding: 10px;
-    }
-
-
-    /* =========================
-       Footer
-       ========================= */
-
-    .footer {
-        text-align: center;
-        color: #9aa0a6;
-        font-size: 13px;
-        margin-top: 45px;
-        padding-top: 20px;
-        border-top: 1px solid #eeeeee;
-    }
+.footer {
+    text-align: center;
+    color: #9aa0a6;
+    font-size: 13px;
+    margin-top: 45px;
+}
 
 </style>
 """, unsafe_allow_html=True)
 
 
 # =========================================================
-# ชื่อคลาส
+# CLASS
 # =========================================================
 
 CLASS_NAMES = [
@@ -271,70 +208,181 @@ CLASS_NAMES = [
 
 
 # =========================================================
-# ข้อมูลโรค
+# ฐานข้อมูลความรู้
 # =========================================================
 
 DISEASE_INFO = {
 
     "Banana Skipper Damage": {
+
         "name": "หนอนม้วนใบกล้วย",
+
         "icon": "🐛",
-        "detail": "พบความเสียหายบริเวณใบจากแมลงหรือหนอน",
-        "care": [
+
+        "short": "ความเสียหายจากหนอนที่ทำลายใบกล้วย",
+
+        "cause":
+        "เกิดจากหนอนของผีเสื้อหนอนม้วนใบกล้วย "
+        "ที่เข้าทำลายใบและอาจทำให้ใบเสียหาย",
+
+        "symptoms": [
+            "ใบมีรอยกัดหรือถูกทำลาย",
+            "ใบอาจมีลักษณะม้วนหรือพับ",
+            "พบส่วนของใบที่ถูกกัดกิน"
+        ],
+
+        "management": [
             "ตรวจสอบใบกล้วยอย่างสม่ำเสมอ",
-            "กำจัดส่วนของใบที่เสียหายมาก",
-            "ตรวจสอบต้นกล้วยบริเวณใกล้เคียง"
+            "เก็บหรือกำจัดส่วนของใบที่เสียหายมาก",
+            "ตรวจสอบบริเวณต้นกล้วยโดยรอบ",
+            "ติดตามการกลับมาของแมลงอย่างต่อเนื่อง"
+        ],
+
+        "prevention": [
+            "สำรวจใบเป็นประจำ",
+            "รักษาความสะอาดบริเวณแปลง",
+            "กำจัดใบที่เสียหายมากอย่างเหมาะสม"
         ]
     },
+
 
     "Black and Yellow Sigatoka": {
+
         "name": "โรคใบจุดดำและเหลือง",
+
         "icon": "🍂",
-        "detail": "พบจุดหรือแผลสีดำและเหลืองบนใบ",
-        "care": [
-            "ตัดใบที่มีอาการออก",
-            "เก็บใบที่ร่วงออกจากบริเวณแปลง",
-            "ดูแลบริเวณปลูกให้มีการระบายอากาศ"
+
+        "short": "โรคใบจุดที่ทำให้เกิดแผลสีเหลืองถึงดำบนใบ",
+
+        "cause":
+        "โรค Sigatoka เกี่ยวข้องกับเชื้อราที่เข้าทำลายใบกล้วย "
+        "และสามารถแพร่กระจายได้ดีในสภาพที่มีความชื้น",
+
+        "symptoms": [
+            "เริ่มพบจุดหรือรอยแผลบนใบ",
+            "แผลอาจเปลี่ยนเป็นสีน้ำตาลหรือดำ",
+            "บริเวณใบที่เป็นโรคอาจเสื่อมสภาพมากขึ้น"
+        ],
+
+        "management": [
+            "ตัดใบที่มีอาการมากออก",
+            "เก็บใบที่เป็นโรคออกจากบริเวณแปลง",
+            "ลดสภาพแวดล้อมที่มีความชื้นสะสม",
+            "ดูแลการระบายน้ำและการถ่ายเทอากาศ"
+        ],
+
+        "prevention": [
+            "ตรวจสอบใบอย่างสม่ำเสมอ",
+            "หลีกเลี่ยงการปลูกที่หนาแน่นเกินไป",
+            "รักษาความสะอาดของแปลง",
+            "ใช้แนวทางควบคุมโรคตามคำแนะนำของผู้เชี่ยวชาญ"
         ]
     },
+
 
     "Chewing insect damage on banana leaf": {
+
         "name": "ความเสียหายจากแมลงกัดกินใบ",
+
         "icon": "🐜",
-        "detail": "พบรอยกัดหรือรูบนใบกล้วย",
-        "care": [
-            "ตรวจสอบใบและกำจัดแมลงที่พบ",
-            "ตัดใบที่เสียหายมากออก",
-            "ตรวจสอบใบอื่นอย่างสม่ำเสมอ"
+
+        "short": "ใบมีรอยกัดหรือรูจากแมลง",
+
+        "cause":
+        "เกิดจากแมลงที่เข้ากัดกินเนื้อเยื่อของใบ "
+        "ทำให้เกิดรูหรือรอยแหว่ง",
+
+        "symptoms": [
+            "ใบมีรู",
+            "ขอบใบมีรอยแหว่ง",
+            "พบร่องรอยการกัดกินบนใบ"
+        ],
+
+        "management": [
+            "ตรวจสอบใต้ใบและบริเวณรอบต้น",
+            "กำจัดส่วนของใบที่เสียหายมาก",
+            "ติดตามจำนวนแมลง",
+            "ใช้วิธีควบคุมแมลงตามคำแนะนำที่เหมาะสม"
+        ],
+
+        "prevention": [
+            "ตรวจใบเป็นประจำ",
+            "กำจัดเศษใบและวัสดุที่เป็นแหล่งสะสมของแมลง",
+            "ดูแลต้นกล้วยให้แข็งแรง"
         ]
     },
 
+
     "Healthy Banana leaf": {
+
         "name": "ใบกล้วยสุขภาพดี",
+
         "icon": "🌿",
-        "detail": "ไม่พบลักษณะของโรคในกลุ่มที่โมเดลจำแนก",
-        "care": [
-            "ดูแลน้ำและธาตุอาหารให้เหมาะสม",
-            "ตรวจสอบใบอย่างสม่ำเสมอ",
+
+        "short": "ไม่พบลักษณะของโรคในกลุ่มที่โมเดลจำแนก",
+
+        "cause":
+        "เป็นลักษณะของใบที่ไม่พบความผิดปกติที่อยู่ในประเภทที่ระบบสามารถจำแนกได้",
+
+        "symptoms": [
+            "ใบมีสีเขียวตามลักษณะปกติ",
+            "ไม่พบจุดโรคที่เด่นชัด",
+            "ไม่พบร่องรอยความเสียหายรุนแรง"
+        ],
+
+        "management": [
+            "ดูแลน้ำให้เหมาะสม",
+            "ดูแลธาตุอาหารของต้นกล้วย",
+            "ตรวจสอบใบอย่างสม่ำเสมอ"
+        ],
+
+        "prevention": [
+            "สำรวจใบเป็นประจำ",
+            "รักษาความสะอาดของแปลง",
             "เฝ้าระวังโรคและแมลง"
         ]
     },
 
+
     "Panama Wilt Disease": {
+
         "name": "โรคตายพราย",
+
         "icon": "⚠️",
-        "detail": "พบลักษณะที่อาจเกี่ยวข้องกับโรคตายพราย",
-        "care": [
+
+        "short": "โรคเหี่ยวที่เกี่ยวข้องกับเชื้อ Fusarium",
+
+        "cause":
+        "โรคตายพรายหรือ Fusarium wilt เกิดจากเชื้อในกลุ่ม "
+        "Fusarium oxysporum f. sp. cubense "
+        "ซึ่งสามารถอยู่ในดินและส่งผลต่อระบบท่อลำเลียงของพืช",
+
+        "symptoms": [
+            "ใบอาจเหลืองและเหี่ยว",
+            "ใบแก่สามารถแสดงอาการก่อน",
+            "ต้นอาจทรุดโทรมและแสดงอาการเหี่ยว"
+        ],
+
+        "management": [
             "แยกต้นที่สงสัยว่าเป็นโรค",
-            "หลีกเลี่ยงการเคลื่อนย้ายดินจากบริเวณที่พบโรค",
+            "หลีกเลี่ยงการเคลื่อนย้ายดินจากพื้นที่ที่พบโรค",
+            "ใช้วัสดุปลูกที่สะอาด",
+            "พิจารณาพันธุ์ที่มีความต้านทานตามพื้นที่",
             "ปรึกษาผู้เชี่ยวชาญเพื่อยืนยันโรค"
+        ],
+
+        "prevention": [
+            "ใช้ต้นพันธุ์หรือวัสดุปลูกที่สะอาด",
+            "ระวังการเคลื่อนย้ายดินจากพื้นที่ปนเปื้อน",
+            "จัดการแปลงอย่างเป็นระบบ",
+            "เลือกพันธุ์ที่เหมาะสมกับพื้นที่"
         ]
     }
 }
 
 
 # =========================================================
-# โหลดโมเดล
+# LOAD MODEL
 # =========================================================
 
 @st.cache_resource
@@ -369,12 +417,15 @@ def load_model():
 
 
 # =========================================================
-# เตรียมรูป
+# IMAGE TRANSFORM
 # =========================================================
 
 transform = transforms.Compose([
+
     transforms.Resize((224, 224)),
+
     transforms.ToTensor(),
+
     transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
         std=[0.229, 0.224, 0.225]
@@ -383,18 +434,18 @@ transform = transforms.Compose([
 
 
 # =========================================================
-# โหลดโมเดล
+# LOAD MODEL
 # =========================================================
 
 try:
 
     model, device = load_model()
 
-except Exception as e:
+except Exception:
 
     st.error("ไม่สามารถโหลดโมเดลได้")
 
-    st.write(
+    st.info(
         "ตรวจสอบว่าไฟล์ "
         "best_mobilenetv2_banana.pth "
         "อยู่ใน Repository เดียวกับ app.py"
@@ -419,280 +470,482 @@ st.markdown(
 
 st.markdown(
     '<div class="subtitle">'
-    'ระบบจำแนกโรคใบกล้วยด้วยปัญญาประดิษฐ์'
+    'ผู้ช่วยตรวจสอบและเรียนรู้เกี่ยวกับโรคใบกล้วย'
     '</div>',
     unsafe_allow_html=True
 )
 
 
 # =========================================================
-# UPLOAD
+# MENU
 # =========================================================
 
-st.markdown(
-    '<div class="section-title">🔍 ตรวจสอบใบกล้วย</div>',
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    '<div class="upload-card">',
-    unsafe_allow_html=True
-)
-
-uploaded_file = st.file_uploader(
-    "เลือกรูปใบกล้วย",
-    type=["jpg", "jpeg", "png"]
-)
-
-st.markdown(
-    '</div>',
-    unsafe_allow_html=True
+page = st.radio(
+    "เมนู",
+    [
+        "🏠 หน้าหลัก",
+        "🔍 ทำนายโรค",
+        "📚 ความรู้โรคใบกล้วย"
+    ],
+    horizontal=True
 )
 
 
 # =========================================================
-# ทำนาย
+# HOME
 # =========================================================
 
-if uploaded_file is not None:
+if page == "🏠 หน้าหลัก":
 
-    image = Image.open(
-        uploaded_file
-    ).convert("RGB")
+    st.markdown("""
+    <div class="card">
+
+    <div class="card-title">
+    🍌 ยินดีต้อนรับสู่ Banana Leaf AI
+    </div>
+
+    <div class="card-text">
+
+    ระบบช่วยจำแนกลักษณะของใบกล้วยด้วย
+    Machine Learning และ Deep Learning
+
+    <br><br>
+
+    สามารถอัปโหลดรูปใบกล้วยเพื่อให้ระบบวิเคราะห์
+    หรือเลือกอ่านข้อมูลเกี่ยวกับโรคและวิธีดูแลได้
+
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
 
     st.markdown(
-        '<div class="image-card">',
-        unsafe_allow_html=True
-    )
-
-    st.image(
-        image,
-        caption="รูปภาพที่เลือก",
-        use_container_width=True
-    )
-
-    st.markdown(
+        '<div class="section-title">'
+        '✨ ระบบสามารถช่วยอะไรได้บ้าง'
         '</div>',
         unsafe_allow_html=True
     )
 
 
-    # =========================
-    # ปุ่มทำนาย
-    # =========================
+    col1, col2 = st.columns(2)
 
-    if st.button(
-        "🔮  ทำนายโรคใบกล้วย",
-        use_container_width=True
-    ):
+    with col1:
 
-        with st.spinner("กำลังวิเคราะห์รูปภาพ..."):
+        st.markdown("""
+        <div class="card">
 
-            image_tensor = transform(
-                image
-            ).unsqueeze(0).to(device)
+        <div class="card-title">
+        🔍 ทำนายใบกล้วย
+        </div>
 
-            with torch.no_grad():
+        <div class="card-text">
+        อัปโหลดรูปใบกล้วยและให้ AI
+        ช่วยจำแนกประเภทของภาพ
+        </div>
 
-                output = model(
-                    image_tensor
-                )
-
-                probabilities = torch.softmax(
-                    output,
-                    dim=1
-                )
-
-                confidence, predicted = torch.max(
-                    probabilities,
-                    dim=1
-                )
+        </div>
+        """, unsafe_allow_html=True)
 
 
-        # =========================
-        # ผลลัพธ์
-        # =========================
+    with col2:
 
-        index = predicted.item()
+        st.markdown("""
+        <div class="card">
 
-        result = CLASS_NAMES[index]
+        <div class="card-title">
+        📚 ศูนย์ความรู้
+        </div>
 
-        confidence_percent = (
-            confidence.item() * 100
-        )
+        <div class="card-text">
+        อ่านข้อมูลเกี่ยวกับสาเหตุ
+        อาการ การจัดการ และการป้องกัน
+        </div>
 
-        info = DISEASE_INFO[result]
+        </div>
+        """, unsafe_allow_html=True)
 
 
-        # =========================
-        # Result Card
-        # =========================
+# =========================================================
+# PREDICTION PAGE
+# =========================================================
 
-        st.markdown(
-            '<div class="result-card">',
-            unsafe_allow_html=True
-        )
+elif page == "🔍 ทำนายโรค":
 
-        st.markdown(
-            f'<div class="result-icon">'
-            f'{info["icon"]}'
-            f'</div>',
-            unsafe_allow_html=True
-        )
+    st.markdown(
+        '<div class="section-title">'
+        '🔍 ตรวจสอบใบกล้วย'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
-        st.markdown(
-            f'<div class="result-title">'
-            f'{info["name"]}'
-            f'</div>',
-            unsafe_allow_html=True
-        )
 
-        st.markdown(
-            f'<div class="result-type">'
-            f'{result}'
-            f'</div>',
-            unsafe_allow_html=True
-        )
+    uploaded_file = st.file_uploader(
+        "เลือกรูปใบกล้วย",
+        type=["jpg", "jpeg", "png"]
+    )
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
+
+    if uploaded_file is not None:
+
+        image = Image.open(
+            uploaded_file
+        ).convert("RGB")
+
+
+        st.image(
+            image,
+            caption="รูปภาพที่เลือก",
+            use_container_width=True
         )
 
 
-        # =========================
-        # สถานะ
-        # =========================
+        if st.button(
+            "🔮 ทำนายโรคใบกล้วย",
+            use_container_width=True
+        ):
 
-        if result == "Healthy Banana leaf":
+            with st.spinner(
+                "AI กำลังวิเคราะห์..."
+            ):
 
-            st.success(
-                "🌿 ไม่พบลักษณะของโรคจากประเภทที่โมเดลจำแนก"
+                image_tensor = transform(
+                    image
+                ).unsqueeze(0).to(device)
+
+
+                with torch.no_grad():
+
+                    output = model(
+                        image_tensor
+                    )
+
+                    probabilities = torch.softmax(
+                        output,
+                        dim=1
+                    )
+
+                    confidence, predicted = torch.max(
+                        probabilities,
+                        dim=1
+                    )
+
+
+            index = predicted.item()
+
+            result = CLASS_NAMES[index]
+
+            confidence_percent = (
+                confidence.item() * 100
             )
 
-        else:
-
-            st.warning(
-                "⚠️ พบลักษณะที่อาจเกี่ยวข้องกับโรคหรือความเสียหาย"
-            )
+            info = DISEASE_INFO[result]
 
 
-        # =========================
-        # Confidence
-        # =========================
-
-        st.markdown(
-            '<div class="confidence-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="confidence-label">'
-            'ความมั่นใจของโมเดล'
-            '</div>',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'<div class="confidence-value">'
-            f'{confidence_percent:.2f}%'
-            f'</div>',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
-
-
-        # =========================
-        # รายละเอียด
-        # =========================
-
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="info-title">'
-            '📋 รายละเอียด'
-            '</div>',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'<div class="info-text">'
-            f'{info["detail"]}'
-            f'</div>',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
-
-
-        # =========================
-        # แนวทางการดูแล
-        # =========================
-
-        st.markdown(
-            '<div class="info-card">',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            '<div class="info-title">'
-            '🩺 แนวทางการดูแล'
-            '</div>',
-            unsafe_allow_html=True
-        )
-
-        for item in info["care"]:
+            # =========================
+            # RESULT
+            # =========================
 
             st.markdown(
-                f'<div class="info-text">'
-                f'✓ {item}'
-                f'</div>',
+                f"""
+                <div class="result-card">
+
+                <div class="result-icon">
+                {info["icon"]}
+                </div>
+
+                <div class="result-title">
+                {info["name"]}
+                </div>
+
+                <div>
+                {result}
+                </div>
+
+                </div>
+                """,
                 unsafe_allow_html=True
             )
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
 
+            st.markdown(
+                f"""
+                <div class="confidence-card">
 
-        # =========================
-        # คะแนนทุกคลาส
-        # =========================
+                ความมั่นใจของโมเดล
 
-        st.markdown(
-            '<div class="section-title">'
-            '📊 คะแนนการจำแนก'
-            '</div>',
-            unsafe_allow_html=True
-        )
+                <div class="confidence-value">
+                {confidence_percent:.2f}%
+                </div>
 
-        for i, class_name in enumerate(
-            CLASS_NAMES
-        ):
-
-            score = (
-                probabilities[0][i].item()
-                * 100
+                </div>
+                """,
+                unsafe_allow_html=True
             )
+
+
+            # =========================
+            # QUICK INFO
+            # =========================
+
+            st.markdown("""
+            <div class="card">
+
+            <div class="card-title">
+            📖 ข้อมูลเบื้องต้น
+            </div>
+
+            """, unsafe_allow_html=True)
+
+            st.write(info["short"])
+
+            st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+            )
+
+
+            # =========================
+            # CAUSE
+            # =========================
+
+            st.markdown("""
+            <div class="card">
+
+            <div class="card-title">
+            🔬 สาเหตุ
+            </div>
+
+            """, unsafe_allow_html=True)
+
+            st.write(info["cause"])
+
+            st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+            )
+
+
+            # =========================
+            # SYMPTOMS
+            # =========================
+
+            st.markdown("""
+            <div class="card">
+
+            <div class="card-title">
+            👀 ลักษณะอาการ
+            </div>
+
+            """, unsafe_allow_html=True)
+
+            for item in info["symptoms"]:
+
+                st.write(
+                    f"✓ {item}"
+                )
+
+            st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+            )
+
+
+            # =========================
+            # MANAGEMENT
+            # =========================
+
+            st.markdown("""
+            <div class="card">
+
+            <div class="card-title">
+            🛠️ วิธีแก้ไข / จัดการ
+            </div>
+
+            """, unsafe_allow_html=True)
+
+            for item in info["management"]:
+
+                st.write(
+                    f"✓ {item}"
+                )
+
+            st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+            )
+
+
+            # =========================
+            # PREVENTION
+            # =========================
+
+            st.markdown("""
+            <div class="card">
+
+            <div class="card-title">
+            🛡️ วิธีป้องกัน
+            </div>
+
+            """, unsafe_allow_html=True)
+
+            for item in info["prevention"]:
+
+                st.write(
+                    f"✓ {item}"
+                )
+
+            st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+            )
+
+
+            # =========================
+            # ALL SCORES
+            # =========================
+
+            st.markdown(
+                '<div class="section-title">'
+                '📊 คะแนนแต่ละประเภท'
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+
+            for i, class_name in enumerate(
+                CLASS_NAMES
+            ):
+
+                score = (
+                    probabilities[0][i].item()
+                    * 100
+                )
+
+                st.write(
+                    f"**{DISEASE_INFO[class_name]['name']}** "
+                    f"— {score:.2f}%"
+                )
+
+                st.progress(
+                    min(score / 100, 1.0)
+                )
+
+
+# =========================================================
+# KNOWLEDGE PAGE
+# =========================================================
+
+elif page == "📚 ความรู้โรคใบกล้วย":
+
+    st.markdown(
+        '<div class="section-title">'
+        '📚 ศูนย์ความรู้โรคใบกล้วย'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    st.write(
+        "เลือกหัวข้อที่ต้องการอ่านข้อมูล"
+    )
+
+
+    selected = st.selectbox(
+        "เลือกโรค",
+        CLASS_NAMES,
+        format_func=lambda x:
+            f"{DISEASE_INFO[x]['icon']} "
+            f"{DISEASE_INFO[x]['name']}"
+    )
+
+
+    info = DISEASE_INFO[selected]
+
+
+    # =========================
+    # TITLE
+    # =========================
+
+    st.markdown(
+        f"""
+        <div class="result-card">
+
+        <div class="result-icon">
+        {info["icon"]}
+        </div>
+
+        <div class="result-title">
+        {info["name"]}
+        </div>
+
+        <div>
+        {info["short"]}
+        </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+    # =========================
+    # CAUSE
+    # =========================
+
+    with st.expander(
+        "🔬 สาเหตุ",
+        expanded=True
+    ):
+
+        st.write(
+            info["cause"]
+        )
+
+
+    # =========================
+    # SYMPTOMS
+    # =========================
+
+    with st.expander(
+        "👀 ลักษณะอาการ",
+        expanded=True
+    ):
+
+        for item in info["symptoms"]:
 
             st.write(
-                f"**{DISEASE_INFO[class_name]['name']}** "
-                f"— {score:.2f}%"
+                f"✓ {item}"
             )
 
-            st.progress(
-                min(score / 100, 1.0)
+
+    # =========================
+    # MANAGEMENT
+    # =========================
+
+    with st.expander(
+        "🛠️ วิธีแก้ไข / จัดการ",
+        expanded=True
+    ):
+
+        for item in info["management"]:
+
+            st.write(
+                f"✓ {item}"
+            )
+
+
+    # =========================
+    # PREVENTION
+    # =========================
+
+    with st.expander(
+        "🛡️ วิธีป้องกัน"
+    ):
+
+        for item in info["prevention"]:
+
+            st.write(
+                f"✓ {item}"
             )
 
 
@@ -701,9 +954,11 @@ if uploaded_file is not None:
 # =========================================================
 
 st.markdown(
-    '<div class="footer">'
-    '🍌 Banana Leaf AI '
-    '• ระบบจำแนกโรคใบกล้วยด้วย AI'
-    '</div>',
+    """
+    <div class="footer">
+    🍌 Banana Leaf AI
+    • ระบบจำแนกโรคใบกล้วยด้วย AI
+    </div>
+    """,
     unsafe_allow_html=True
 )
