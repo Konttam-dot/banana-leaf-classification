@@ -497,78 +497,470 @@ page = st.radio(
 
 if page == "🏠 หน้าหลัก":
 
-    st.markdown("""
-    <div class="card">
-
-    <div class="card-title">
-    🍌 ยินดีต้อนรับสู่ Banana Leaf AI
-    </div>
-
-    <div class="card-text">
-
-    ระบบช่วยจำแนกลักษณะของใบกล้วยด้วย
-    Machine Learning และ Deep Learning
-
-    <br><br>
-
-    สามารถอัปโหลดรูปใบกล้วยเพื่อให้ระบบวิเคราะห์
-    หรือเลือกอ่านข้อมูลเกี่ยวกับโรคและวิธีดูแลได้
-
-    </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
+    # -----------------------------------------
+    # Hero
+    # -----------------------------------------
 
     st.markdown(
-        '<div class="section-title">'
-        '✨ ระบบสามารถช่วยอะไรได้บ้าง'
-        '</div>',
+        """
+        <div style="
+            text-align:center;
+            padding:25px 10px 15px 10px;
+        ">
+
+            <div style="
+                font-size:65px;
+                margin-bottom:5px;
+            ">
+                🍌
+            </div>
+
+            <div style="
+                font-size:38px;
+                font-weight:700;
+                color:#202124;
+            ">
+                Banana Leaf AI
+            </div>
+
+            <div style="
+                font-size:17px;
+                color:#5f6368;
+                margin-top:8px;
+            ">
+                ผู้ช่วยตรวจสอบและเรียนรู้เกี่ยวกับโรคใบกล้วย
+            </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+    # -----------------------------------------
+    # Main prediction card
+    # -----------------------------------------
+
+    st.markdown(
+        """
+        <div class="card">
+
+            <div class="card-title">
+                🔍 ตรวจสอบใบกล้วย
+            </div>
+
+            <div class="card-text">
+                อัปโหลดรูปใบกล้วยเพื่อให้ AI
+                วิเคราะห์และจำแนกประเภทของภาพ
+            </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+    uploaded_home = st.file_uploader(
+        "เลือกรูปใบกล้วยจากอุปกรณ์",
+        type=["jpg", "jpeg", "png"],
+        key="home_uploader"
+    )
+
+
+    # -----------------------------------------
+    # ถ้ามีรูป
+    # -----------------------------------------
+
+    if uploaded_home is not None:
+
+        home_image = Image.open(
+            uploaded_home
+        ).convert("RGB")
+
+
+        st.markdown(
+            """
+            <div style="
+                text-align:center;
+                color:#5f6368;
+                margin:15px 0 8px 0;
+            ">
+                📷 รูปภาพที่เลือก
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+        st.image(
+            home_image,
+            use_container_width=True
+        )
+
+
+        # -----------------------------------------
+        # ปุ่มทำนาย
+        # -----------------------------------------
+
+        if st.button(
+            "🔮 ทำนายโรคใบกล้วย",
+            use_container_width=True,
+            key="home_predict"
+        ):
+
+            with st.spinner(
+                "🍃 AI กำลังวิเคราะห์ใบกล้วย..."
+            ):
+
+                home_tensor = transform(
+                    home_image
+                ).unsqueeze(0).to(device)
+
+
+                with torch.no_grad():
+
+                    home_output = model(
+                        home_tensor
+                    )
+
+                    home_probabilities = torch.softmax(
+                        home_output,
+                        dim=1
+                    )
+
+                    home_confidence, home_predicted = torch.max(
+                        home_probabilities,
+                        dim=1
+                    )
+
+
+            home_index = home_predicted.item()
+
+            home_result = CLASS_NAMES[
+                home_index
+            ]
+
+            home_confidence_percent = (
+                home_confidence.item() * 100
+            )
+
+            home_info = DISEASE_INFO[
+                home_result
+            ]
+
+
+            # -----------------------------------------
+            # Result
+            # -----------------------------------------
+
+            st.markdown(
+                f"""
+                <div class="result-card">
+
+                    <div class="result-icon">
+                        {home_info["icon"]}
+                    </div>
+
+                    <div class="result-title">
+                        {home_info["name"]}
+                    </div>
+
+                    <div class="result-type">
+                        ผลการวิเคราะห์จาก Banana Leaf AI
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+
+            # -----------------------------------------
+            # Confidence
+            # -----------------------------------------
+
+            st.markdown(
+                f"""
+                <div class="confidence-card">
+
+                    <div style="
+                        color:#5f6368;
+                        font-size:15px;
+                    ">
+                        ความมั่นใจของโมเดล
+                    </div>
+
+                    <div class="confidence-value">
+                        {home_confidence_percent:.2f}%
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+
+            # -----------------------------------------
+            # Status
+            # -----------------------------------------
+
+            if home_result == "Healthy Banana leaf":
+
+                st.success(
+                    "🌿 ใบกล้วยมีลักษณะสุขภาพดี "
+                    "ตามประเภทที่โมเดลสามารถจำแนกได้"
+                )
+
+            else:
+
+                st.warning(
+                    "⚠️ ระบบพบลักษณะที่อาจเกี่ยวข้องกับ "
+                    "โรคหรือความเสียหาย"
+                )
+
+
+            # -----------------------------------------
+            # Information
+            # -----------------------------------------
+
+            st.markdown(
+                """
+                <div class="card">
+
+                    <div class="card-title">
+                        📖 ข้อมูลเบื้องต้น
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            st.write(
+                home_info["short"]
+            )
+
+
+            # -----------------------------------------
+            # Cause
+            # -----------------------------------------
+
+            st.markdown(
+                """
+                <div class="card">
+
+                    <div class="card-title">
+                        🔬 สาเหตุ
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            st.write(
+                home_info["cause"]
+            )
+
+
+            # -----------------------------------------
+            # Symptoms
+            # -----------------------------------------
+
+            st.markdown(
+                """
+                <div class="card">
+
+                    <div class="card-title">
+                        👀 ลักษณะอาการ
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            for item in home_info["symptoms"]:
+
+                st.write(
+                    f"✓ {item}"
+                )
+
+
+            # -----------------------------------------
+            # Management
+            # -----------------------------------------
+
+            st.markdown(
+                """
+                <div class="card">
+
+                    <div class="card-title">
+                        🛠️ วิธีแก้ไข / จัดการ
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            for item in home_info["management"]:
+
+                st.write(
+                    f"✓ {item}"
+                )
+
+
+            # -----------------------------------------
+            # Prevention
+            # -----------------------------------------
+
+            st.markdown(
+                """
+                <div class="card">
+
+                    <div class="card-title">
+                        🛡️ วิธีป้องกัน
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            for item in home_info["prevention"]:
+
+                st.write(
+                    f"✓ {item}"
+                )
+
+
+            # -----------------------------------------
+            # All scores
+            # -----------------------------------------
+
+            st.markdown(
+                """
+                <div class="section-title">
+                    📊 คะแนนการจำแนก
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+
+            for i, class_name in enumerate(
+                CLASS_NAMES
+            ):
+
+                score = (
+                    home_probabilities[0][i].item()
+                    * 100
+                )
+
+                st.write(
+                    f"**{DISEASE_INFO[class_name]['name']}** "
+                    f"— {score:.2f}%"
+                )
+
+                st.progress(
+                    min(score / 100, 1.0)
+                )
+
+
+    # -----------------------------------------
+    # ยังไม่มีรูป
+    # -----------------------------------------
+
+    else:
+
+        st.markdown(
+            """
+            <div style="
+                text-align:center;
+                color:#9aa0a6;
+                padding:20px;
+            ">
+                📷 เลือกรูปใบกล้วยเพื่อเริ่มการวิเคราะห์
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+    # -----------------------------------------
+    # Features
+    # -----------------------------------------
+
+    st.markdown(
+        """
+        <div class="section-title">
+            ✨ ฟังก์ชันของระบบ
+        </div>
+        """,
         unsafe_allow_html=True
     )
 
 
     col1, col2 = st.columns(2)
 
+
     with col1:
 
-        st.markdown("""
-        <div class="card">
+        st.markdown(
+            """
+            <div class="card">
 
-        <div class="card-title">
-        🔍 ทำนายใบกล้วย
-        </div>
+                <div class="card-title">
+                    🔍 AI Prediction
+                </div>
 
-        <div class="card-text">
-        อัปโหลดรูปใบกล้วยและให้ AI
-        ช่วยจำแนกประเภทของภาพ
-        </div>
+                <div class="card-text">
+                    วิเคราะห์รูปใบกล้วยด้วย
+                    MobileNetV2
+                </div>
 
-        </div>
-        """, unsafe_allow_html=True)
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
     with col2:
 
-        st.markdown("""
-        <div class="card">
+        st.markdown(
+            """
+            <div class="card">
 
-        <div class="card-title">
-        📚 ศูนย์ความรู้
+                <div class="card-title">
+                    📚 Knowledge
+                </div>
+
+                <div class="card-text">
+                    อ่านข้อมูลโรค สาเหตุ
+                    อาการ วิธีแก้ไข และการป้องกัน
+                </div>
+
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+    # -----------------------------------------
+    # Footer
+    # -----------------------------------------
+
+    st.markdown(
+        """
+        <div class="footer">
+            🍌 Banana Leaf AI
+            <br>
+            ระบบจำแนกโรคใบกล้วยด้วยปัญญาประดิษฐ์
         </div>
-
-        <div class="card-text">
-        อ่านข้อมูลเกี่ยวกับสาเหตุ
-        อาการ การจัดการ และการป้องกัน
-        </div>
-
-        </div>
-        """, unsafe_allow_html=True)
-
-
-# =========================================================
-# PREDICTION PAGE
-# =========================================================
+        """,
+        unsafe_allow_html=True
+    )
 
 elif page == "🔍 ทำนายโรค":
 
