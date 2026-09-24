@@ -6,25 +6,260 @@ from torchvision import transforms
 from PIL import Image
 
 
-# =========================
+# =========================================================
 # ตั้งค่าหน้าเว็บ
-# =========================
+# =========================================================
 
 st.set_page_config(
-    page_title="Banana Leaf Disease Detection",
+    page_title="Banana Leaf AI",
     page_icon="🍌",
-    layout="centered"
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
 
-st.title("🍌 Banana Leaf Disease Detection")
-st.write("ระบบจำแนกโรคใบกล้วยด้วย AI")
 
-st.divider()
+# =========================================================
+# CSS ปรับแต่งหน้าตา
+# =========================================================
+
+st.markdown("""
+<style>
+
+    /* =========================
+       พื้นฐาน
+       ========================= */
+
+    .stApp {
+        background-color: #ffffff;
+    }
+
+    .main .block-container {
+        max-width: 900px;
+        padding-top: 35px;
+        padding-bottom: 50px;
+    }
+
+    #MainMenu {
+        visibility: hidden;
+    }
+
+    footer {
+        visibility: hidden;
+    }
+
+    header {
+        visibility: hidden;
+    }
 
 
-# =========================
+    /* =========================
+       Header
+       ========================= */
+
+    .logo {
+        text-align: center;
+        font-size: 58px;
+        margin-bottom: 0px;
+    }
+
+    .main-title {
+        text-align: center;
+        font-size: 42px;
+        font-weight: 700;
+        color: #202124;
+        letter-spacing: -1px;
+        margin-bottom: 5px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 17px;
+        color: #5f6368;
+        margin-bottom: 35px;
+    }
+
+
+    /* =========================
+       กล่องหัวข้อ
+       ========================= */
+
+    .section-title {
+        font-size: 23px;
+        font-weight: 600;
+        color: #202124;
+        margin-top: 20px;
+        margin-bottom: 14px;
+    }
+
+
+    /* =========================
+       Upload Card
+       ========================= */
+
+    .upload-card {
+        background: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(60,64,67,0.12);
+        margin-bottom: 20px;
+    }
+
+
+    /* =========================
+       Image Card
+       ========================= */
+
+    .image-card {
+        background: #f8f9fa;
+        border-radius: 20px;
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+
+    /* =========================
+       Result
+       ========================= */
+
+    .result-card {
+        background: #f8fbf8;
+        border: 1px solid #d7ead9;
+        border-radius: 24px;
+        padding: 28px;
+        margin-top: 25px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .result-icon {
+        font-size: 48px;
+        margin-bottom: 8px;
+    }
+
+    .result-title {
+        font-size: 30px;
+        font-weight: 700;
+        color: #188038;
+        margin-bottom: 8px;
+    }
+
+    .result-type {
+        font-size: 15px;
+        color: #5f6368;
+    }
+
+
+    /* =========================
+       Confidence
+       ========================= */
+
+    .confidence-card {
+        background: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 20px;
+        padding: 22px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .confidence-label {
+        font-size: 15px;
+        color: #5f6368;
+    }
+
+    .confidence-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #1a73e8;
+        margin-top: 5px;
+    }
+
+
+    /* =========================
+       Info Card
+       ========================= */
+
+    .info-card {
+        background: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 20px;
+        padding: 22px;
+        margin-top: 18px;
+        box-shadow: 0 1px 5px rgba(60,64,67,0.08);
+    }
+
+    .info-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #202124;
+        margin-bottom: 10px;
+    }
+
+    .info-text {
+        color: #5f6368;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+
+    /* =========================
+       ปุ่ม
+       ========================= */
+
+    .stButton > button {
+        width: 100%;
+        height: 52px;
+        border-radius: 26px;
+        border: none;
+        background: #1a73e8;
+        color: white;
+        font-size: 17px;
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(26,115,232,0.25);
+        transition: all 0.2s ease;
+    }
+
+    .stButton > button:hover {
+        background: #1557b0;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================
+       File uploader
+       ========================= */
+
+    [data-testid="stFileUploader"] {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 10px;
+    }
+
+
+    /* =========================
+       Footer
+       ========================= */
+
+    .footer {
+        text-align: center;
+        color: #9aa0a6;
+        font-size: 13px;
+        margin-top: 45px;
+        padding-top: 20px;
+        border-top: 1px solid #eeeeee;
+    }
+
+</style>
+""", unsafe_allow_html=True)
+
+
+# =========================================================
 # ชื่อคลาส
-# =========================
+# =========================================================
 
 CLASS_NAMES = [
     "Banana Skipper Damage",
@@ -35,14 +270,15 @@ CLASS_NAMES = [
 ]
 
 
-# =========================
-# ข้อมูลการดูแล
-# =========================
+# =========================================================
+# ข้อมูลโรค
+# =========================================================
 
 DISEASE_INFO = {
 
     "Banana Skipper Damage": {
         "name": "หนอนม้วนใบกล้วย",
+        "icon": "🐛",
         "detail": "พบความเสียหายบริเวณใบจากแมลงหรือหนอน",
         "care": [
             "ตรวจสอบใบกล้วยอย่างสม่ำเสมอ",
@@ -53,6 +289,7 @@ DISEASE_INFO = {
 
     "Black and Yellow Sigatoka": {
         "name": "โรคใบจุดดำและเหลือง",
+        "icon": "🍂",
         "detail": "พบจุดหรือแผลสีดำและเหลืองบนใบ",
         "care": [
             "ตัดใบที่มีอาการออก",
@@ -63,6 +300,7 @@ DISEASE_INFO = {
 
     "Chewing insect damage on banana leaf": {
         "name": "ความเสียหายจากแมลงกัดกินใบ",
+        "icon": "🐜",
         "detail": "พบรอยกัดหรือรูบนใบกล้วย",
         "care": [
             "ตรวจสอบใบและกำจัดแมลงที่พบ",
@@ -73,6 +311,7 @@ DISEASE_INFO = {
 
     "Healthy Banana leaf": {
         "name": "ใบกล้วยสุขภาพดี",
+        "icon": "🌿",
         "detail": "ไม่พบลักษณะของโรคในกลุ่มที่โมเดลจำแนก",
         "care": [
             "ดูแลน้ำและธาตุอาหารให้เหมาะสม",
@@ -83,6 +322,7 @@ DISEASE_INFO = {
 
     "Panama Wilt Disease": {
         "name": "โรคตายพราย",
+        "icon": "⚠️",
         "detail": "พบลักษณะที่อาจเกี่ยวข้องกับโรคตายพราย",
         "care": [
             "แยกต้นที่สงสัยว่าเป็นโรค",
@@ -93,9 +333,9 @@ DISEASE_INFO = {
 }
 
 
-# =========================
+# =========================================================
 # โหลดโมเดล
-# =========================
+# =========================================================
 
 @st.cache_resource
 def load_model():
@@ -128,9 +368,9 @@ def load_model():
     return model, device
 
 
-# =========================
+# =========================================================
 # เตรียมรูป
-# =========================
+# =========================================================
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -142,9 +382,9 @@ transform = transforms.Compose([
 ])
 
 
-# =========================
+# =========================================================
 # โหลดโมเดล
-# =========================
+# =========================================================
 
 try:
 
@@ -163,21 +403,56 @@ except Exception as e:
     st.stop()
 
 
-# =========================
-# เลือกรูป
-# =========================
+# =========================================================
+# HEADER
+# =========================================================
 
-st.subheader("🔍 ทำนายใบกล้วย")
+st.markdown(
+    '<div class="logo">🍌</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="main-title">Banana Leaf AI</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="subtitle">'
+    'ระบบจำแนกโรคใบกล้วยด้วยปัญญาประดิษฐ์'
+    '</div>',
+    unsafe_allow_html=True
+)
+
+
+# =========================================================
+# UPLOAD
+# =========================================================
+
+st.markdown(
+    '<div class="section-title">🔍 ตรวจสอบใบกล้วย</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="upload-card">',
+    unsafe_allow_html=True
+)
 
 uploaded_file = st.file_uploader(
     "เลือกรูปใบกล้วย",
     type=["jpg", "jpeg", "png"]
 )
 
+st.markdown(
+    '</div>',
+    unsafe_allow_html=True
+)
 
-# =========================
+
+# =========================================================
 # ทำนาย
-# =========================
+# =========================================================
 
 if uploaded_file is not None:
 
@@ -185,36 +460,58 @@ if uploaded_file is not None:
         uploaded_file
     ).convert("RGB")
 
+    st.markdown(
+        '<div class="image-card">',
+        unsafe_allow_html=True
+    )
+
     st.image(
         image,
-        caption="รูปที่เลือก",
+        caption="รูปภาพที่เลือก",
         use_container_width=True
     )
 
+    st.markdown(
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+
+    # =========================
+    # ปุ่มทำนาย
+    # =========================
+
     if st.button(
-        "🔮 ทำนาย",
+        "🔮  ทำนายโรคใบกล้วย",
         use_container_width=True
     ):
 
-        image_tensor = transform(
-            image
-        ).unsqueeze(0).to(device)
+        with st.spinner("กำลังวิเคราะห์รูปภาพ..."):
 
-        with torch.no_grad():
+            image_tensor = transform(
+                image
+            ).unsqueeze(0).to(device)
 
-            output = model(
-                image_tensor
-            )
+            with torch.no_grad():
 
-            probabilities = torch.softmax(
-                output,
-                dim=1
-            )
+                output = model(
+                    image_tensor
+                )
 
-            confidence, predicted = torch.max(
-                probabilities,
-                dim=1
-            )
+                probabilities = torch.softmax(
+                    output,
+                    dim=1
+                )
+
+                confidence, predicted = torch.max(
+                    probabilities,
+                    dim=1
+                )
+
+
+        # =========================
+        # ผลลัพธ์
+        # =========================
 
         index = predicted.item()
 
@@ -226,54 +523,159 @@ if uploaded_file is not None:
 
         info = DISEASE_INFO[result]
 
-        st.divider()
 
-        # =====================
-        # ผลลัพธ์
-        # =====================
+        # =========================
+        # Result Card
+        # =========================
+
+        st.markdown(
+            '<div class="result-card">',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'<div class="result-icon">'
+            f'{info["icon"]}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'<div class="result-title">'
+            f'{info["name"]}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'<div class="result-type">'
+            f'{result}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+
+        # =========================
+        # สถานะ
+        # =========================
 
         if result == "Healthy Banana leaf":
 
-            st.success("🌿 ใบกล้วยสุขภาพดี")
+            st.success(
+                "🌿 ไม่พบลักษณะของโรคจากประเภทที่โมเดลจำแนก"
+            )
 
         else:
 
             st.warning(
-                "⚠️ พบลักษณะที่อาจเกี่ยวข้องกับโรค"
+                "⚠️ พบลักษณะที่อาจเกี่ยวข้องกับโรคหรือความเสียหาย"
             )
 
-        st.subheader(
-            f"ผลการทำนาย: {info['name']}"
+
+        # =========================
+        # Confidence
+        # =========================
+
+        st.markdown(
+            '<div class="confidence-card">',
+            unsafe_allow_html=True
         )
 
-        st.write(
-            f"**ประเภท:** {result}"
+        st.markdown(
+            '<div class="confidence-label">'
+            'ความมั่นใจของโมเดล'
+            '</div>',
+            unsafe_allow_html=True
         )
 
-        st.write(
-            f"**ความมั่นใจ:** "
-            f"{confidence_percent:.2f}%"
+        st.markdown(
+            f'<div class="confidence-value">'
+            f'{confidence_percent:.2f}%'
+            f'</div>',
+            unsafe_allow_html=True
         )
 
-        st.write(
-            f"**รายละเอียด:** {info['detail']}"
+        st.markdown(
+            '</div>',
+            unsafe_allow_html=True
         )
 
-        # =====================
-        # วิธีดูแล
-        # =====================
 
-        st.subheader("🩺 แนวทางการดูแล")
+        # =========================
+        # รายละเอียด
+        # =========================
+
+        st.markdown(
+            '<div class="info-card">',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            '<div class="info-title">'
+            '📋 รายละเอียด'
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'<div class="info-text">'
+            f'{info["detail"]}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+
+        # =========================
+        # แนวทางการดูแล
+        # =========================
+
+        st.markdown(
+            '<div class="info-card">',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            '<div class="info-title">'
+            '🩺 แนวทางการดูแล'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
         for item in info["care"]:
 
-            st.write(f"• {item}")
+            st.markdown(
+                f'<div class="info-text">'
+                f'✓ {item}'
+                f'</div>',
+                unsafe_allow_html=True
+            )
 
-        # =====================
+        st.markdown(
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+
+        # =========================
         # คะแนนทุกคลาส
-        # =====================
+        # =========================
 
-        st.subheader("📊 คะแนนแต่ละประเภท")
+        st.markdown(
+            '<div class="section-title">'
+            '📊 คะแนนการจำแนก'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
         for i, class_name in enumerate(
             CLASS_NAMES
@@ -285,9 +687,23 @@ if uploaded_file is not None:
             )
 
             st.write(
-                f"{class_name}: {score:.2f}%"
+                f"**{DISEASE_INFO[class_name]['name']}** "
+                f"— {score:.2f}%"
             )
 
             st.progress(
                 min(score / 100, 1.0)
             )
+
+
+# =========================================================
+# FOOTER
+# =========================================================
+
+st.markdown(
+    '<div class="footer">'
+    '🍌 Banana Leaf AI '
+    '• ระบบจำแนกโรคใบกล้วยด้วย AI'
+    '</div>',
+    unsafe_allow_html=True
+)
